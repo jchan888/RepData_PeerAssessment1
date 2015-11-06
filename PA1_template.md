@@ -47,23 +47,7 @@ Show any code that is needed to
 
 ```r
 activity <- read.csv("activity.csv", header=TRUE, sep=",", na.strings="NA")
-```
-
-```
-## Warning in file(file, "rt"): cannot open file 'activity.csv': No such file
-## or directory
-```
-
-```
-## Error in file(file, "rt"): cannot open the connection
-```
-
-```r
 activity$interval <- factor(activity$interval)
-```
-
-```
-## Error in factor(activity$interval): object 'activity' not found
 ```
 
 ###What is mean total number of steps taken per day?
@@ -75,18 +59,7 @@ For this part of the assignment, you can ignore the missing values in the datase
 
 ```r
 total_steps_byday <- aggregate(steps ~ date, data=activity, sum, na.rm=TRUE)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'activity' not found
-```
-
-```r
 total_steps_byday$steps <- as.numeric(total_steps_byday$steps)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'total_steps_byday' not found
 ```
 
 2. If you do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day
@@ -96,27 +69,14 @@ total_steps_byday$steps <- as.numeric(total_steps_byday$steps)
 hist(total_steps_byday$steps, xlab="Total steps/day", main="Total no. of steps per day")
 ```
 
-```
-## Error in hist(total_steps_byday$steps, xlab = "Total steps/day", main = "Total no. of steps per day"): object 'total_steps_byday' not found
-```
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
 
 3. Calculate and report the mean and median of the total number of steps taken per day
 
 
 ```r
 mean_steps <- mean(total_steps_byday$steps, na.rm=TRUE)
-```
-
-```
-## Error in mean(total_steps_byday$steps, na.rm = TRUE): object 'total_steps_byday' not found
-```
-
-```r
 median_steps <- median(total_steps_byday$steps, na.rm=TRUE)
-```
-
-```
-## Error in median(total_steps_byday$steps, na.rm = TRUE): object 'total_steps_byday' not found
 ```
 
 * *The mean number of steps taken per day is as follows:*
@@ -126,7 +86,7 @@ print(mean_steps)
 ```
 
 ```
-## Error in print(mean_steps): object 'mean_steps' not found
+## [1] 10766.19
 ```
 * *The median number of steps taken per day is as follows:.*
 
@@ -135,7 +95,7 @@ print(median_steps)
 ```
 
 ```
-## Error in print(median_steps): object 'median_steps' not found
+## [1] 10765
 ```
 
 ###What is the average daily activity pattern?
@@ -145,37 +105,19 @@ print(median_steps)
 
 ```r
 mean_steps_byinterval <- aggregate(steps ~ interval, data=activity, mean, na.rm=TRUE)
-```
 
-```
-## Error in eval(expr, envir, enclos): object 'activity' not found
-```
-
-```r
 plot(mean_steps_byinterval$interval, mean_steps_byinterval$steps, type="l", xlab="5-minute Interval", ylab="Average Number of Steps", main="Time series plot of average number of steps taken")
 ```
 
-```
-## Error in plot(mean_steps_byinterval$interval, mean_steps_byinterval$steps, : object 'mean_steps_byinterval' not found
-```
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
 
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 
 ```r
 max_steps_byinterval <- max(mean_steps_byinterval$steps)
-```
 
-```
-## Error in eval(expr, envir, enclos): object 'mean_steps_byinterval' not found
-```
-
-```r
 interval_max_steps <- mean_steps_byinterval[which.max(mean_steps_byinterval$steps),]$interval
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'mean_steps_byinterval' not found
 ```
 
 * *The maximum number of steps is as follows:.*
@@ -185,7 +127,7 @@ print(max_steps_byinterval)
 ```
 
 ```
-## Error in print(max_steps_byinterval): object 'max_steps_byinterval' not found
+## [1] 206.1698
 ```
 
 * *The 5-minute interval with the maximum number of steps is as follows:.*
@@ -195,7 +137,8 @@ print(interval_max_steps)
 ```
 
 ```
-## Error in print(interval_max_steps): object 'interval_max_steps' not found
+## [1] 835
+## 288 Levels: 0 5 10 15 20 25 30 35 40 45 50 55 100 105 110 115 120 ... 2355
 ```
 
 ###Imputing missing values
@@ -207,34 +150,9 @@ Note that there are a number of days/intervals where there are missing values (c
 
 ```r
 na_steps <- sum(is.na(as.character(activity$steps)))
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'activity' not found
-```
-
-```r
 na_date <- sum(is.na(as.character(activity$date)))
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'activity' not found
-```
-
-```r
 na_interval <- sum(is.na(as.character(activity$interval)))
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'activity' not found
-```
-
-```r
 total_na <- na_steps+na_date+na_interval
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'na_steps' not found
 ```
 
 * *The total number of missing values is as follows:.*
@@ -244,7 +162,7 @@ print(total_na)
 ```
 
 ```
-## Error in print(total_na): object 'total_na' not found
+## [1] 2304
 ```
 
 2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
@@ -256,82 +174,18 @@ print(total_na)
 
 ```r
 activity_no_na <- activity
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'activity' not found
-```
-
-```r
 mean_steps_byinterval_ <- mean_steps_byinterval
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'mean_steps_byinterval' not found
-```
-
-```r
 mean_steps_byinterval_$ave_steps <- mean_steps_byinterval_$steps
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'mean_steps_byinterval_' not found
-```
-
-```r
 dropvars <- names(mean_steps_byinterval_) %in% c("steps") 
-```
-
-```
-## Error in match(x, table, nomatch = 0L): object 'mean_steps_byinterval_' not found
-```
-
-```r
 mean_steps_byinterval_ <- mean_steps_byinterval_[!dropvars]
-```
 
-```
-## Error in eval(expr, envir, enclos): object 'mean_steps_byinterval_' not found
-```
-
-```r
 activity_no_na <- merge(activity_no_na,mean_steps_byinterval_,by="interval")
-```
 
-```
-## Error in merge(activity_no_na, mean_steps_byinterval_, by = "interval"): object 'activity_no_na' not found
-```
-
-```r
 activity_no_na$steps <- ifelse(is.na(activity_no_na$steps), activity_no_na$ave_steps, activity_no_na$steps)
-```
 
-```
-## Error in ifelse(is.na(activity_no_na$steps), activity_no_na$ave_steps, : object 'activity_no_na' not found
-```
-
-```r
 activity_no_na <- activity_no_na[order(activity_no_na$date, activity_no_na$interval),]
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'activity_no_na' not found
-```
-
-```r
 dropvars <- names(activity_no_na) %in% c("ave_steps") 
-```
-
-```
-## Error in match(x, table, nomatch = 0L): object 'activity_no_na' not found
-```
-
-```r
 activity_no_na <- activity_no_na[!dropvars]
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'activity_no_na' not found
 ```
 
 4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
@@ -339,34 +193,15 @@ activity_no_na <- activity_no_na[!dropvars]
 
 ```r
 total_steps_byday_no_na <- aggregate(steps ~ date, data = activity_no_na, sum)
-```
 
-```
-## Error in eval(expr, envir, enclos): object 'activity_no_na' not found
-```
-
-```r
 hist(total_steps_byday_no_na$steps, xlab="Total steps/day", main="Total no. of steps per day")
 ```
 
-```
-## Error in hist(total_steps_byday_no_na$steps, xlab = "Total steps/day", : object 'total_steps_byday_no_na' not found
-```
+![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png) 
 
 ```r
 mean_steps_no_na <- mean(total_steps_byday_no_na$steps)
-```
-
-```
-## Error in mean(total_steps_byday_no_na$steps): object 'total_steps_byday_no_na' not found
-```
-
-```r
 median_steps_no_na <- median(total_steps_byday_no_na$steps)
-```
-
-```
-## Error in median(total_steps_byday_no_na$steps): object 'total_steps_byday_no_na' not found
 ```
 
 * *The mean total number of steps taken per day is as follows:.*
@@ -376,7 +211,7 @@ print(mean_steps_no_na)
 ```
 
 ```
-## Error in print(mean_steps_no_na): object 'mean_steps_no_na' not found
+## [1] 10766.19
 ```
 
 * *The median total number of steps taken per day is as follows:.*
@@ -386,7 +221,7 @@ print(median_steps_no_na)
 ```
 
 ```
-## Error in print(median_steps_no_na): object 'median_steps_no_na' not found
+## [1] 10766.19
 ```
 * *It is observed that the mean and median for the complete dataset are identical, while the mean is identical with the mean of the dataset from the first assignment.*
 
@@ -400,42 +235,11 @@ For this part the weekdays() function may be of some help here. Use the dataset 
 
 ```r
 activity_no_na$weekday <- weekdays(as.Date(activity_no_na$date))
-```
-
-```
-## Error in as.Date(activity_no_na$date): object 'activity_no_na' not found
-```
-
-```r
 activity_no_na$weekday <- ifelse(activity_no_na$weekday %in% c("Saturday", "Sunday"), c("weekend"), c("weekday"))
-```
-
-```
-## Error in match(x, table, nomatch = 0L): object 'activity_no_na' not found
-```
-
-```r
 activity_no_na$weekday <- factor(activity_no_na$weekday)
-```
 
-```
-## Error in factor(activity_no_na$weekday): object 'activity_no_na' not found
-```
-
-```r
 mean_steps_byweekday <- aggregate(activity_no_na$steps, by=list(weekday=activity_no_na$weekday,interval=activity_no_na$interval), mean, na.rm=TRUE)
-```
-
-```
-## Error in aggregate(activity_no_na$steps, by = list(weekday = activity_no_na$weekday, : object 'activity_no_na' not found
-```
-
-```r
 colnames(mean_steps_byweekday)[which(names(mean_steps_byweekday) == "x")] <- "steps"
-```
-
-```
-## Error in colnames(mean_steps_byweekday)[which(names(mean_steps_byweekday) == : object 'mean_steps_byweekday' not found
 ```
 
 2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
@@ -443,18 +247,9 @@ colnames(mean_steps_byweekday)[which(names(mean_steps_byweekday) == "x")] <- "st
 
 ```r
 library(lattice)
-```
-
-```
-## Warning: package 'lattice' was built under R version 3.2.2
-```
-
-```r
 xyplot(steps ~  interval | weekday, data = mean_steps_byweekday, layout = c(1,2), type ="l", xlab="5-minute Interval", ylab="Number of steps", main="Time series plot")
 ```
 
-```
-## Error in eval(substitute(groups), data, environment(x)): object 'mean_steps_byweekday' not found
-```
+![plot of chunk unnamed-chunk-18](figure/unnamed-chunk-18-1.png) 
 
 
